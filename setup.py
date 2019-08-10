@@ -15,6 +15,7 @@ setup(
     license='MIT License',  # example license
     description='A simple Django storage backend for aliyun oss2.',
     long_description=README,
+    long_description_content_type='text/markdown',
     url='https://github.com/sai628/django-aliyun-oss2',
     author='Sai628',
     author_email='sai100628@gmail.com',
