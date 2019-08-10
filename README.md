@@ -29,6 +29,7 @@ END_POINT = "<your access endpoint>"
 BUCKET_NAME = "<your bucket name>"  # if not exist in aliyun oss platform, it will created automatically
 ALIYUN_OSS_CNAME = ""  # custom domain. optional
 BUCKET_ACL_TYPE = "private"  # bucket access type. available value: private, public-read, public-read-write
+ALIYUN_OSS_HTTPS = False  # optional config. determine use https or not. if not declare, this value will be False by default.
 
 # storage media file
 DEFAULT_FILE_STORAGE = 'django_aliyun_oss2.backends.AliyunMediaStorage'

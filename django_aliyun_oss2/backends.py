@@ -63,6 +63,10 @@ class AliyunBaseStorage(BucketOperationMixin, Storage):
         self.end_point = _normalize_endpoint(self._get_config('END_POINT').strip())
         self.bucket_name = self._get_config('BUCKET_NAME')
         self.cname = self._get_config('ALIYUN_OSS_CNAME')
+        try:
+            self.is_https = self._get_config('ALIYUN_OSS_HTTPS')
+        except ImproperlyConfigured:
+            self.is_https = False
 
         self.auth = Auth(self.access_key_id, self.access_key_secret)
         self.service = Service(self.auth, self.end_point)
@@ -181,7 +185,11 @@ class AliyunBaseStorage(BucketOperationMixin, Storage):
         name = name.encode('utf8')
         # 做这个转化，是因为下面的_make_url会用urllib.quote转码，转码不支持unicode，会报错，在python2环境下。
         ret = self.bucket._make_url(self.bucket_name, name)
-        return ret.replace('%2F', '/')
+        ret = ret.replace('%2F', '/')
+        if self.is_https and ret.startswith('http://'):
+            return 'https' + ret[4:]
+        else:
+            return ret
 
     def read(self, name):
         pass
